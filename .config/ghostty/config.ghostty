@@ -1,0 +1,12 @@
+# Font
+font-size = 18
+
+# Window
+window-padding-x = 10
+window-padding-y = 8
+
+# Follow macOS light/dark appearance
+window-theme = system
+
+# Shell integration
+shell-integration = detect
