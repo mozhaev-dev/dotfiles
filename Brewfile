@@ -9,3 +9,4 @@ brew "git"
 
 # Terminal
 cask "ghostty"
+brew "tmux"
