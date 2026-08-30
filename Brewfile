@@ -6,6 +6,7 @@ cask "google-chrome"
 
 # Version control
 brew "git"
+brew "lazygit"
 
 # Terminal
 cask "ghostty"
