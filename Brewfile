@@ -11,3 +11,10 @@ brew "lazygit"
 # Terminal
 cask "ghostty"
 brew "tmux"
+
+# Utils
+brew "bat"
+brew "eza"
+brew "fzf"
+brew "ripgrep"
+brew "zoxide"
