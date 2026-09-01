@@ -10,3 +10,7 @@ window-theme = system
 
 # Shell integration
 shell-integration = detect
+
+# ----MACHINE-LOCAL----
+
+config-file = ?config.local

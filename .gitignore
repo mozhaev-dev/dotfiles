@@ -1,5 +1,16 @@
 .DS_Store
 
+# Machine-local overrides belong in $HOME, never in the shared tree.
+home/.zshrc.local
+home/.zprofile.local
+home/.secrets.zsh
+home/.config/git/config.local
+home/.config/tmux/tmux.local.conf
+home/.config/ghostty/config.local
+home/.ssh/config.local
+
 # SSH keys and machine-specific state
 .ssh/id_*
 .ssh/known_hosts
+home/.ssh/id_*
+home/.ssh/known_hosts

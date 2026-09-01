@@ -29,3 +29,10 @@ source <(fzf --zsh)
 
 # zoxide
 eval "$(zoxide init zsh)"
+
+# ----MACHINE-LOCAL----
+# Secrets and machine-specific settings live outside this repo.
+# Loaded last so they override everything above.
+
+[ -r "$HOME/.secrets.zsh" ] && source "$HOME/.secrets.zsh"
+[ -r "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
