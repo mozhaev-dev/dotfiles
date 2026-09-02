@@ -12,6 +12,16 @@ brew "lazygit"
 cask "ghostty"
 brew "tmux"
 
+# Editor
+brew "neovim"
+brew "tree-sitter-cli"      # nvim-treesitter builds parsers with it
+brew "lua-language-server"
+brew "typescript-language-server"
+
+# Rust toolchain. The formula installs rustup only — install.sh adds the
+# stable toolchain and the rust-analyzer component on top of it.
+brew "rustup"
+
 # Utils
 brew "bat"
 brew "eza"
