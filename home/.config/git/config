@@ -11,3 +11,7 @@
 
 [include]
 	path = config.local
+[pull]
+	rebase = true
+[rebase]
+	autoStash = true
