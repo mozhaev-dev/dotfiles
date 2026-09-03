@@ -2,6 +2,8 @@
 
 alias ll='eza -lah --git --icons'
 alias lt='eza --tree -lah --git --icons'
+alias nv='nvim'
+alias lg='lazygit'
 
 #----SHELL----
 
