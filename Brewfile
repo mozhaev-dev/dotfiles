@@ -10,6 +10,7 @@ brew "lazygit"
 
 # Terminal
 cask "ghostty"
+cask "font-meslo-lg-nerd-font"   # glyphs for eza --icons
 brew "tmux"
 
 # Editor
