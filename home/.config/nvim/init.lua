@@ -15,6 +15,10 @@ vim.opt.rtp:prepend(lazypath)
 -- Leader
 vim.g.mapleader = " "
 
+-- nvim-tree replaces the built-in netrw file browser.
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 require("lazy").setup({
   -- Colorscheme
   {
@@ -163,6 +167,42 @@ require("lazy").setup({
       vim.keymap.set("n", "<leader>fb", builtin.buffers, { silent = true })
       vim.keymap.set("n", "<leader>fh", builtin.help_tags, { silent = true })
     end,
+  },
+  -- File tree
+  {
+    "nvim-tree/nvim-tree.lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    cmd = { "NvimTreeOpen", "NvimTreeToggle" },
+    keys = {
+      { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Toggle file tree" },
+    },
+    opts = {
+      hijack_cursor = true,
+      sync_root_with_cwd = true,
+      respect_buf_cwd = true,
+      update_focused_file = {
+        enable = true,
+        update_root = true,
+      },
+      view = {
+        width = 35,
+      },
+      filesystem_watchers = {
+        enable = false,
+      },
+      renderer = {
+        group_empty = true,
+        highlight_git = true,
+        icons = {
+          show = {
+            file = true,
+            folder = true,
+            folder_arrow = true,
+            git = true,
+          },
+        },
+      },
+    },
   },
   -- Git signs in gutter
   {
