@@ -15,3 +15,6 @@ home/.ssh/config.local
 .ssh/known_hosts
 home/.ssh/id_*
 home/.ssh/known_hosts
+
+# logs
+*.log

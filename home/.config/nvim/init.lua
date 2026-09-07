@@ -239,6 +239,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
+-- Show diagnostics for the current line
+vim.keymap.set("n", "<leader>d", function()
+  vim.diagnostic.open_float(nil, { scope = "line" })
+end, { silent = true, desc = "Show line diagnostics" })
+
 -- Line numbers
 vim.opt.number = true
 vim.opt.relativenumber = true

@@ -4,6 +4,15 @@ cask "chatgpt"
 # Web browser
 cask "google-chrome"
 
+# Video editor
+cask "capcut"
+
+# Media player
+cask "iina"
+
+# Torrents
+cask "transmission"
+
 # Version control
 brew "git"
 brew "lazygit"
@@ -14,6 +23,7 @@ cask "font-meslo-lg-nerd-font"   # glyphs for eza --icons
 brew "tmux"
 
 # Editor
+cask "visual-studio-code"
 brew "neovim"
 brew "tree-sitter-cli"      # nvim-treesitter builds parsers with it
 brew "lua-language-server"
