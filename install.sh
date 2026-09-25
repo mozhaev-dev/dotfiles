@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 #
 # Links every file under home/ into $HOME, creates the machine-local override
-# files this repo's configs expect, and completes the Rust toolchain that
-# Brewfile's rustup cannot set up on its own. Idempotent: safe to re-run.
+# files this repo's configs expect. Idempotent: safe to re-run.
 #
 #   ./install.sh          link everything
 #   ./install.sh --dry-run   show what would happen, change nothing
@@ -20,11 +19,11 @@ DRY_RUN=0
 # Every shared config loads its matching local file at the point where the
 # application's precedence rules make the local settings win.
 LOCAL_FILES=(
+	".config/homebrew/Brewfile.local"
 	".zshrc.local"
 	".zprofile.local"
 	".config/git/config.local"
 	".config/tmux/tmux.local.conf"
-	".config/ghostty/config.local"
 	".config/nvim/local.lua"
 	".ssh/config.local"
 )
@@ -98,48 +97,6 @@ seed_local_files() {
 	done
 }
 
-# Homebrew's rustup formula is not on PATH until a login shell has re-read
-# .zprofile, so resolve the shim directly before falling back to the PATH.
-find_rustup() {
-	local brew_rustup="${HOMEBREW_PREFIX:-/opt/homebrew}/opt/rustup/bin/rustup"
-
-	if [[ -x "$brew_rustup" ]]; then
-		printf '%s\n' "$brew_rustup"
-	else
-		command -v rustup || true
-	fi
-}
-
-install_rust() {
-	local rustup components
-	rustup="$(find_rustup)"
-
-	if [[ -z "$rustup" ]]; then
-		printf '  skip  rustup missing — run `brew bundle` first\n'
-		return
-	fi
-	printf '  ok    rustup  %s\n' "${rustup/#"$HOME"/\~}"
-
-	if "$rustup" show active-toolchain >/dev/null 2>&1; then
-		printf '  ok    toolchain\n'
-	else
-		printf '  add   stable toolchain\n'
-		run "$rustup" default stable
-	fi
-
-	# rustup keeps a shim for rust-analyzer whether or not the component is
-	# installed, so a missing one passes every check and fails only when the
-	# editor starts the server.
-	components="$("$rustup" component list --installed 2>/dev/null || true)"
-
-	if grep -q '^rust-analyzer' <<<"$components"; then
-		printf '  ok    rust-analyzer\n'
-	else
-		printf '  add   rust-analyzer\n'
-		run "$rustup" component add rust-analyzer
-	fi
-}
-
 main() {
 	(( DRY_RUN )) && printf 'DRY RUN — nothing will be changed.\n\n'
 
@@ -148,9 +105,6 @@ main() {
 
 	printf '\nMachine-local files\n'
 	seed_local_files
-
-	printf '\nRust toolchain\n'
-	install_rust
 
 	if [[ -d "$BACKUP_DIR" ]]; then
 		printf '\nReplaced files saved in %s\n' "${BACKUP_DIR/#"$HOME"/\~}"

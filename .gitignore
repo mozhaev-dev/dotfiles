@@ -1,12 +1,12 @@
 .DS_Store
 
 # Machine-local overrides belong in $HOME, never in the shared tree.
+home/.config/homebrew/Brewfile.local
 home/.zshrc.local
 home/.zprofile.local
 home/.secrets.zsh
 home/.config/git/config.local
 home/.config/tmux/tmux.local.conf
-home/.config/ghostty/config.local
 home/.config/nvim/local.lua
 home/.ssh/config.local
 

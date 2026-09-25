@@ -1,6 +1,7 @@
 # dotfiles
 
-Shared macOS configuration with a machine-local override layer.
+Shared macOS terminal environment for Apple Silicon with a machine-local override layer.
+Linux support is outside the scope of this repository.
 
 ## How it works
 
@@ -17,14 +18,18 @@ loads its local counterpart with higher priority:
 | `~/.zprofile` | `~/.zprofile.local` |
 | `~/.config/git/config` | `~/.config/git/config.local` |
 | `~/.config/tmux/tmux.conf` | `~/.config/tmux/tmux.local.conf` |
-| `~/.config/ghostty/config` | `~/.config/ghostty/config.local` |
 | `~/.config/nvim/init.lua` | `~/.config/nvim/local.lua` |
 | `~/.ssh/config` | `~/.ssh/config.local` |
+
+Git identity, SSH identity files and terminal-specific tmux settings belong
+in their corresponding local files.
 
 Shell secrets belong in `~/.secrets.zsh`. The installer keeps that file and
 the local SSH config readable only by the current user.
 
 ## Install
+
+Run these commands from the repository directory.
 
 Install the packages first. This step is deliberately separate: it is slow,
 it needs the network, and it is not something to re-run casually.
@@ -48,21 +53,34 @@ Apply the configuration:
 Existing files are moved to a timestamped `~/.dotfiles-backup-*` directory
 before links are created. Re-running the installer is safe.
 
-## Toolchains
+## Machine-local packages
 
-Most packages are ready to use straight from `Brewfile`. Two are not, so
-`install.sh` finishes them:
+`Brewfile` declares the shared terminal tools and optionally loads
+`~/.config/homebrew/Brewfile.local`. Put GUI applications, fonts, Rust and
+other machine-specific packages in that local file. It lives outside Git.
+`install.sh` creates an empty local file if it is missing; an existing file
+is preserved. You can also create it before the first `brew bundle` run.
 
-- **Rust.** The `rustup` formula installs the version manager and nothing
-  else — no compiler and no `rust-analyzer`. The installer adds the stable
-  toolchain and the `rust-analyzer` component, and `~/.zprofile` puts the
-  rustup shims on `PATH`, which the formula does not do either. Note that
-  rustup keeps a `rust-analyzer` shim whether or not the component is
-  installed, so a missing component looks fine until Neovim starts the server
-  and it exits immediately.
-- **Neovim.** Nothing to do by hand: `init.lua` clones lazy.nvim on first
-  launch, installs the plugins pinned in `lazy-lock.json`, and builds the
-  Treesitter parsers it needs.
+```ruby
+cask "ghostty"
+cask "font-meslo-lg-nerd-font"
+cask "visual-studio-code"
+brew "rustup"
+```
+
+`brew bundle` and `brew bundle check` use the combined shared and local list.
+Use the combined list for `brew bundle cleanup` as well, so local packages
+are not treated as unwanted. Back up the local file separately to restore
+this machine's applications later.
+
+Toolchain initialization belongs to the machine-local setup, not
+`install.sh`. For Rust, initialize a toolchain and any required components
+locally (or use a `postinstall` hook in the local Brewfile). Put its PATH
+configuration in `~/.zprofile.local`.
+
+Neovim clones lazy.nvim on first launch, installs the plugins pinned in
+`lazy-lock.json`, and builds its Treesitter parsers. Its language integrations
+only start language servers that are available on PATH.
 
 ## Adding a shared config
 

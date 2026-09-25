@@ -5,10 +5,6 @@
 #	process = git-lfs filter-process
 #	required = true
 
-[user]
-	email = mozhaev.dev@gmail.com
-	name = s.mozhaev
-
 [include]
 	path = config.local
 [pull]
