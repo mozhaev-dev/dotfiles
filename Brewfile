@@ -17,6 +17,8 @@ cask "transmission"
 brew "git"
 brew "lazygit"
 
+# Speach to text
+cask "handy"
 # Terminal
 cask "ghostty"
 cask "font-meslo-lg-nerd-font"   # glyphs for eza --icons
